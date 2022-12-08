@@ -8,10 +8,11 @@
 ### What should be done? 🙆🏼
 
 
-- [ ] Scaffold the project
-- [ ] Build preprocessing file
-- [ ] Build evaluation file
-- [ ] Write a report
-- [ ] Improve the README
+- [X] Scaffold the project
+- [X] Build preprocessing file
+- [X] Build evaluation file
+- [ ] Add the augmentation part
+- [ ] Scaffold the report
+- [ ] Complete the report
 
 ** *Add more points when needed*
