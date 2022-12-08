@@ -7,17 +7,25 @@ from librosa.feature import melspectrogram
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D, Conv2D
-from tensorflow.keras.optimizers import SGD, Adam, Adagrad
+from tensorflow.keras.optimizers import SGD
 from keras.callbacks import EarlyStopping
 from keras.utils import np_utils
 from keras.regularizers import l2
 from sklearn.model_selection import train_test_split
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 def build_model():
     """ Build the CNN Model according to the J. Salamon and J.P. Bello paper """
 
     model = Sequential()
+    model.add(SpecAugment(
+        freq_mask_param=128,
+        time_mask_param=128,
+        n_freq_mask=1,
+        n_time_mask=2,
+        mask_value=-1
+    ))
     model.add(
         Convolution2D(
             24,
@@ -53,47 +61,50 @@ def build_model():
 random_seed = 42
 
 # 1. Load from the processed data
-print("Phase 1: Loading data ⚙️")
+print("Phase 1: Loading data")
 
 FEATURES_PATH = os.path.abspath('data/processed/features_x.npy')
 LABELS_PATH = os.path.abspath('data/processed/labels_y.npy')
 
 X = np.load(FEATURES_PATH)
 y = np.load(LABELS_PATH)
-
+print(X.shape)
 
 # 2. Split data — Train / Validation / Test
-print("Phase 2: Splitting the data 🧑🏼‍🔬️")
+print("Phase 2: Splitting the data")
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=random_seed)
 X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.25, random_state=random_seed)
 
+# 3. Data augmentation
+print("Phase 3: Augment the data")
 
-# 3. Build model
-print("Phase 3: Building the model 👷🏼️")
+# TODO: Add the data augmentation part here
+
+# 4. Build model
+print("Phase 4: Building the model️")
 
 model = build_model()
 
-
-# 4. Fit model
-print("Phase 4: Fit the model")
+# 5. Fit model
+print("Phase 5: Fit the model")
 
 history = model.fit(X_train, y_train, validation_data=(X_val, y_val), batch_size=100, epochs=200)
 
 
-# 5. Save model
-print("Phase 5: Save the model")
+# 6. Save model
+print("Phase 6: Save the model")
 
-MODEL_PATH = os.path.abspath('models/cnn_model_no_augmentation')
+MODEL_PATH = os.path.abspath('models/cnn_model_with_augmentation')
 model.save(MODEL_PATH)
 
-# 6. Predicting
-print("Phase 6: Predicting")
+# 7. Predicting
+print("Phase 7: Predicting")
 
 prediction = model.predict(X_test)
 
-# 7. Evaluating
-print("Phase 7: Evaluating")
+# 8. Evaluating
+print("Phase 8: Evaluating")
 
 labels_predicted = np.argmax(model.predict(X_test, verbose=0), 1)
 labels_true = np.argmax(y_test, 1)
@@ -102,10 +113,3 @@ accuracy = model.evaluate(X_test, y_test, batch_size=32)[1]
 print("\nAccuracy = " + str(accuracy))
 
 # Without augmentation the accuracy is 0.708571
-
-
-
-
-
-
-
