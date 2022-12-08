@@ -18,7 +18,7 @@ def log_mel_spec(audio_directory, fold_directories):
             # The second number in the file name is the label
             label = filename.split('fold')[1].split('-')[1]
             labels.append(label)
-            # sr = audio rate
+            # sr — audio rate
             time_series, sr = librosa.load(filename, sr=44100)
 
             input_patch_length = 3 * sr
@@ -43,7 +43,7 @@ def log_mel_spec(audio_directory, fold_directories):
                 )
 
             log_mel_spectrogram.append(spectogram_db)
-        return np.array(log_mel_spectrogram), np.array(labels, dtype=np.int32)
+    return np.array(log_mel_spectrogram), np.array(labels, dtype=np.int32)  # (873,128,128), (873,)
 
 
 def encode(labels):
