@@ -1,5 +1,6 @@
 import librosa
 import numpy as np
+from keras.preprocessing.image import ImageDataGenerator
 
 from jams_data_generator import JamsDataGenerator
 
@@ -22,6 +23,7 @@ class JamsToImageDataGenerator(JamsDataGenerator):
         self.audio_sample_rate = audio_sample_rate
         self.fft_window_size = fft_window_size
         self.hop_length = hop_length
+        self.image_generator = ImageDataGenerator()
 
     def __len__(self):
         """Denotes the number of batches per epoch

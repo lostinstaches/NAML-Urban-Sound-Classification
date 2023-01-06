@@ -1,5 +1,6 @@
 from typing import Any
 
+import numpy as np
 from keras.utils import to_categorical, Sequence
 import os
 import jams
@@ -13,9 +14,11 @@ class JamsDataGenerator(Sequence):
         audio_file_extension: str = ".wav",
         mini_batch_size: int = 64,
         use_categorical_labels: bool = True,
+        shuffle_samples: bool = True,
     ):
         self.mini_batch_size = mini_batch_size
         self.use_categorical_labels = use_categorical_labels
+        self.shuffle_samples = shuffle_samples
         self.samples_with_metadata: dict[str, dict[str, Any]] = {}
         self.samples_names: list[str] = []
 
@@ -44,6 +47,8 @@ class JamsDataGenerator(Sequence):
         self.num_classes = max(
             sample["class_id"] + 1 for sample in self.samples_with_metadata.values()
         )
+
+        self.on_epoch_end()
 
     def __len__(self):
         """Denotes the number of batches per epoch
@@ -79,4 +84,5 @@ class JamsDataGenerator(Sequence):
         return samples, labels
 
     def on_epoch_end(self):
-        return
+        if self.shuffle_samples:
+            np.random.shuffle(self.samples_names)
