@@ -11,6 +11,14 @@ class JamsDataGenerator(Sequence):
     def __init__(
         self,
         fold_path: str,
+        modifications_to_include: list[str] = [
+            "bgnoise",
+            "pitch1",
+            "pitch2",
+            "stretch",
+            "drc",
+            "original",
+        ],
         audio_file_extension: str = ".wav",
         mini_batch_size: int = 64,
         use_categorical_labels: bool = True,
@@ -23,7 +31,7 @@ class JamsDataGenerator(Sequence):
         self.samples_names: list[str] = []
 
         for modification in filter(
-            lambda p: not p.startswith("."), os.listdir(fold_path)
+            lambda p: p in modifications_to_include, os.listdir(fold_path)
         ):
             path_to_jams_files = os.path.join(fold_path, modification, "jams")
             path_to_audio_files = os.path.join(fold_path, modification, "audio")

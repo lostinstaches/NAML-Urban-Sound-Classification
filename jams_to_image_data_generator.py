@@ -9,6 +9,14 @@ class JamsToImageDataGenerator(JamsDataGenerator):
     def __init__(
         self,
         fold_path: str,
+        modifications_to_include: list[str] = [
+            "bgnoise",
+            "pitch1",
+            "pitch2",
+            "stretch",
+            "drc",
+            "original",
+        ],
         audio_file_extension: str = ".wav",
         mini_batch_size: int = 64,
         audio_sample_rate: int = 44100,
@@ -17,8 +25,9 @@ class JamsToImageDataGenerator(JamsDataGenerator):
     ):
         super().__init__(
             fold_path,
-            audio_file_extension,
-            mini_batch_size,
+            modifications_to_include=modifications_to_include,
+            audio_file_extension=audio_file_extension,
+            mini_batch_size=mini_batch_size,
         )
         self.audio_sample_rate = audio_sample_rate
         self.fft_window_size = fft_window_size
