@@ -11,9 +11,8 @@ This project is aiming at replicating the effort from the "Deep Convolutional Ne
 ### Let's see the outcome!   👀
 
 #### Code  🤖
-Preprocessing [https://github.com/lostinstaches/NAML-Urban-Sound-Classification/blob/main/preprocessing.py]
-Training [https://github.com/lostinstaches/NAML-Urban-Sound-Classification/blob/main/train.py]
+Preprocessing [[click](https://github.com/lostinstaches/NAML-Urban-Sound-Classification/blob/main/preprocessing.py)]
+Training [[click](https://github.com/lostinstaches/NAML-Urban-Sound-Classification/blob/main/train.py)]
 
 #### Extra 👩🏼‍🏫
-Project Report [https://github.com/lostinstaches/NAML-Urban-Sound-Classification/blob/main/report.pdf]
-  
+Project Report [[click](https://github.com/lostinstaches/NAML-Urban-Sound-Classification/blob/main/report.pdf)]
